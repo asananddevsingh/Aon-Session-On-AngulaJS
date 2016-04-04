@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Directives</title>
+    <script src="libs/angular.min.js"></script>
+    <script>
+        var myApp = angular.module("myApp", []);
+        myApp.controller("myController", function ($scope) {
+
+            $scope.name = "Anand Dev";
+
+            $scope.click = "Click me";
+
+            $scope.Welcome = function (studentName) {
+                console.log("welcome, ", studentName, " to angular session !");
+            };
+        })
+    </script>
+</head>
+
+<body>
+    <div ng-app="myApp" id="divMyApp">
+        <div ng-controller="myController" id="divCtrl">
+            <div ng-model="name" ng-bind="name" ng-init="name = 'Sahil Singh'" ng-show="true"></div>
+            <input type="text" id="txtName" ng-model="student">
+            <a ng-href="#" ng-click="Welcome(student)" id="aGreet">{{click}}</a>
+        </div>
+    </div>
+</body>
+
+</html>
+<!-- Links:
+https://docs.angularjs.org/guide/directive
+https://docs.angularjs.org/api/ng/directive
+-->

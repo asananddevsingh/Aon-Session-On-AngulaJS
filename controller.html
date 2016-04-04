@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Controller</title>
+    <script src="libs/angular.min.js"></script>
+    <script>
+        /* What is constructor function */
+        var myApp = angular.module("myApp", []);
+        myApp.controller("myController", function ($scope) {
+            /*console.log("Root scope", $rootScope);
+            console.log("Child scope", $scope);*/
+
+            //            $scope.greetMsg = "Hey there, Have a nice day !";
+        });
+        /* myApp.controller("yourController", function ($scope) {
+
+             $scope.testMsg = "This is your controller";
+
+             $scope.employees = [
+                 {
+                     name: 'Jani',
+                     country: 'Norway'
+                 },
+                 {
+                     name: 'Hege',
+                     country: 'Sweden'
+                 },
+                 {
+                     name: 'Kai',
+                     country: 'Denmark'
+                 }]
+         });*/
+    </script>
+</head>
+
+<body>
+    <h3>In Angular, a Controller is defined by a JavaScript constructor function that is used to augment the Angular Scope.</h3>
+    <div ng-app="myApp" id="divMyAp" class="root">
+        <div ng-controller="myController">
+            {{greetMsg}}
+        </div>
+
+        <!--<div ng-controller="yourController">
+            {{testMsg}}
+            <li ng-repeat="emp in employees">
+                {{emp.name}}
+            </li>
+        </div>-->
+
+    </div>
+</body>
+
+</html>
+<!--Link:
+https://docs.angularjs.org/guide/controller
+-->

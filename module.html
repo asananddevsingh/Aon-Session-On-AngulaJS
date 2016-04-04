@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fundamental Of AngularJS </title>
+    <script src="libs/angular.min.js"></script>
+    <script>
+        var myApp = angular.module("myApp", []);
+        var yourApp = angular.module("yourApp", []);
+        angular.bootstrap(document.getElementById("yourDiv"));
+    </script>
+</head>
+
+<body>
+    <h3>A module is a collection of services, directives, controllers, filters etc </h3>
+    <div ng-app="myApp" class="root" id="myDiv">
+        {{1+3}}
+    </div>
+    <div ng-app="yourApp" class="root" id="yourDiv">
+        {{1+4}}
+    </div>
+    <!--
+    <script>
+        var myApp = angular.module("myApp", []);
+        var yourApp = angular.module("yourApp", []);
+        angular.bootstrap(document.getElementById("yourDiv"));
+    </script>
+-->
+</body>
+
+</html>
+<!-- Links:
+https://docs.angularjs.org/api/ng/function/angular.bootstrap
+https://docs.angularjs.org/guide/bootstrap
+-->
