@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Directive</title>
+    <style>
+        div {
+            border: 1px solid #000;
+        }
+    </style>
+    <script src="libs/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-app="myApp" id="dvMyApp">
+        <div ng-controller="Controller">
+            <my-dialog>Check out the contents, {{name}}!</my-dialog>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+<script>
+    var myApp = angular.module("myApp", [])
+        .controller('Controller', ['$scope', function ($scope) {
+            $scope.name = 'Tobias';
+        }])
+        .directive('myDialog', function () {
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope: {},
+                template: '<div class="alert" ng-transclude></div>',
+                link: function (scope) {
+                    scope.name = 'Jeff';
+                }
+            };
+        });
+</script>
