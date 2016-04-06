@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Service</title>
+    <script src="libs/angular.min.js"></script>
+
+</head>
+
+<body>
+    <div ng-app="serviceApp">
+        <div ng-controller="serviceController"></div>
+        <div ng-controller="serviceController2"></div>
+    </div>
+</body>
+
+</html>
+
+
+
+<!--
+ What is service?
+ The Service recipe produces a service just like the Value or Factory recipes, but it does so by invoking a constructor with the new operator. The constructor can take zero or more arguments, which represent dependencies needed by the instance of this type.
+
+* Service takes construction function as second argument.
+ * The variable "this" is returned to us and become service.
+* If you want to return a value insted of an object, you need to use factory.
+-->
+<script>
+    var serviceApp = angular.module("serviceApp", []);
+
+    function ConstructorFunction() {
+        this.serviceConstant = "Hello from service ";
+        this.serviceValueFn = function () {
+                return "Service constructor function is invoked.";
+        }
+        // return "ABC"; It would be not available in the instance.
+    }
+
+    serviceApp.service("myservice", ConstructorFunction);
+
+    /*serviceApp.factory("myservice", function () {
+        return new ConstructorFunction();
+    } );*/
+
+    serviceApp.controller("serviceController", function (myservice) {
+        console.log(myservice.serviceConstant);
+    })
+    serviceApp.controller("serviceController2", function (myservice) {
+        console.log(myservice.serviceValueFn());
+    })
+</script>

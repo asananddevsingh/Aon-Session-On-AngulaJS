@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Factory</title>
+    <script src="libs/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-app="factoryApp">
+        <div ng-controller="factoryController"></div>
+    </div>
+</body>
+
+</html>
+
+
+<!--
+  What is factory.
+   * The Factory recipe constructs a new service using a function with zero or more arguments (these are dependencies on other services). The return value of this function is the service instance created by this recipe.
+
+    * Factory takes provider function as second argument and returns an object.
+-->
+<script>
+    var factoryApp = angular.module("factoryApp", []);
+
+    factoryApp.factory("empNameFactory", function (){
+        return "Anand Dev";
+    })
+
+    function GreatingProvider(empName)
+    {
+        var employee = {
+            name: empName || "No name",
+            greetMsg : function () {
+                return "Welcome, " + this.name;
+            }
+        }
+        return employee;
+    }
+
+    factoryApp.factory("greetFactory", function (empNameFactory) {
+        return new GreatingProvider(empNameFactory);
+    })
+
+    factoryApp.controller("factoryController", function (greetFactory) {
+        console.log(greetFactory.greetMsg());
+    })
+
+</script>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Providers</title>
+    <script src="libs/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-app="providerApp">
+        <div ng-controller="providerController"></div>
+        <div ng-controller="providerController2"></div>
+    </div>
+
+</body>
+
+</html>
+
+<!--
+ What is provider:
+ A provider is an object with a $get() method. The injector calls the $get method to create a new instance of a service. The Provider can have additional methods which would allow for configuration of the provider. AngularJS uses $provide to register new providers
+
+* Provider, factory and service all are providers, but they behave differenlty and used differently.
+* It gets called only once, no matter how many times you have injected it.
+* We can use providers at the config phase of the application.
+NOTE: always use "Provider" as suffix wiith the providers.
+-->
+<script>
+    var providerApp = angular.module("providerApp", []);
+
+    providerApp.provider("myProvider", function () {
+        //this.providerValue = "Hello provider value";
+        this.$get = function () {
+            console.log("My provider is invoked.")
+            return "Value form provider.";
+        };
+    })
+
+    providerApp.controller("providerController", function (myProvider) {
+        console.log(myProvider);
+    })
+    providerApp.controller("providerController2", function (myProvider) {
+        console.log(myProvider);
+        // console.log(myProvider.providerValue);
+    })
+
+    /* providerApp.config(function(myProviderProvider){
+         console.log("Config is invoked");
+         console.log("Provider invoked in config: ", myProviderProvider.providerValue);
+
+     })*/
+</script>
+
+<!--http://www.simplygoodcode.com/2015/11/the-difference-between-service-provider-and-factory-in-angularjs/#more-541-->

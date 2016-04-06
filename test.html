@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="libs/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-app="myApp">
+        <div ng-controller="DemoController as demo">
+            Client ID: {{demo.clientId}}
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+<script>
+    var myApp = angular.module('myApp', []);
+
+    myApp.factory("nameFactory", function () {
+        return 'Anand Dev Singh';
+    })
+
+    function GenerateGreetMessage(name) {
+        return {
+            msg: "Welcome, " + (name || "No name")
+        };
+    }
+
+    myApp.service('greetFactory', function (nameFactory) {
+        return new GenerateGreetMessage(nameFactory);
+    });
+
+    myApp.controller('DemoController', ['greetFactory', function DemoController(greetFactory) {
+        console.log(greetFactory.msg);
+    }]);
+</script>
