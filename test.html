@@ -5,13 +5,49 @@
     <meta charset="UTF-8">
     <title>Test</title>
     <script src="libs/angular.min.js"></script>
+    <script>
+        var myApp = angular.module("myApp", []);
+
+        myApp.factory('clientId', function clientIdFactory() {
+          return 'a12345654321x';
+        });
+
+        myApp.factory('apiToken', function apiTokenFactory(clientId) {
+
+            var encrypt = function(data1, data2) {
+                return (data1 + ':' + data2).toUpperCase();
+            };
+
+            var apiToken = encrypt(clientId, "secret");
+
+            return apiToken;
+        });
+
+        function UnicornLauncher() {
+
+          this.Name = "Launcher";
+          this.Token = "No message";
+        }
+
+        myApp.factory('unicornLauncherFactory', function() {
+          return new UnicornLauncher("Anand Dev");
+        });
+
+        myApp.service('unicornLauncherService', UnicornLauncher);
+
+        myApp.controller('DemoController', function DemoController( unicornLauncherFactory, unicornLauncherService) {
+            console.log("Factory: ", unicornLauncherFactory.Token);
+            console.log("Service: ", unicornLauncherService.Token);
+        });
+
+    </script>
 </head>
 
 <body>
     <div ng-app="myApp">
-        <div ng-controller="DemoController as demo">
+      <div ng-controller="DemoController as demo">
             Client ID: {{demo.clientId}}
-        </div>
+      </div>
     </div>
 </body>
 
@@ -19,23 +55,35 @@
 
 
 <script>
-    var myApp = angular.module('myApp', []);
+    /*var myApp = angular.module('myApp', []);
 
-    myApp.factory("nameFactory", function () {
-        return 'Anand Dev Singh';
+    myApp.provider("nameProvider", function(){
+        this.valueFromProvider = "Provider value";
+        this.$get =  function(){
+            return "returning value";
+        };
+        this.$get = function(){
+            return "returning value";
+        }
+
     })
 
-    function GenerateGreetMessage(name) {
-        return {
-            msg: "Welcome, " + (name || "No name")
-        };
-    }
+    myApp.config(function(nameProvider){
+        console.log("Config is invoked");
+        console.log()
+    })
 
-    myApp.service('greetFactory', function (nameFactory) {
-        return new GenerateGreetMessage(nameFactory);
+    myApp.factory("nameFactory", function () {
+        return 'returning value';
+    })
+
+    myApp.service('nameService', function () {
+        return "returning value";
     });
 
-    myApp.controller('DemoController', ['greetFactory', function DemoController(greetFactory) {
-        console.log(greetFactory.msg);
-    }]);
+    myApp.controller('DemoController', function DemoController(nameProvider, nameFactory, nameService) {
+        console.log("Provider : ", nameProvider, nameProvider.valueFromProvider);
+        console.log("Factory : ", nameFactory);
+        console.log("Service : ", nameService);
+    });*/
 </script>

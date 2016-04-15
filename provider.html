@@ -29,27 +29,35 @@ NOTE: always use "Provider" as suffix wiith the providers.
 <script>
     var providerApp = angular.module("providerApp", []);
 
-    providerApp.provider("myProvider", function () {
-        //this.providerValue = "Hello provider value";
+    providerApp.provider("nameProvider", function () {
+        console.log("Name provider is invoked", new Date());
+
+        // priperties for provider's internal use.
+        this.name = "Anand Dev";
+        this.value = "Software Developer";
+
+        // Method which is going to return final value.
         this.$get = function () {
-            console.log("My provider is invoked.")
-            return "Value form provider.";
+            return {
+                name: this.name,
+                value: this.value
+            }
         };
     })
 
-    providerApp.controller("providerController", function (myProvider) {
-        console.log(myProvider);
-    })
-    providerApp.controller("providerController2", function (myProvider) {
-        console.log(myProvider);
-        // console.log(myProvider.providerValue);
+    // always use "Provider" as suffix wiith the providers, this is why nameProvider becomes "nameProviderProvider".
+    providerApp.config(function (nameProviderProvider) {
+        console.log("Name provider is invoked from config. and returning object value as: ", nameProviderProvider);
     })
 
-    /* providerApp.config(function(myProviderProvider){
-         console.log("Config is invoked");
-         console.log("Provider invoked in config: ", myProviderProvider.providerValue);
+    providerApp.controller("providerController", function (nameProvider) {
+        console.log("First controller: ", nameProvider);
+    })
+    providerApp.controller("providerController2", function (nameProvider) {
+        console.log("Second controller: ", nameProvider);
+        // console.log(nameProvider.value);
+    })
 
-     })*/
 </script>
 
 <!--http://www.simplygoodcode.com/2015/11/the-difference-between-service-provider-and-factory-in-angularjs/#more-541-->
