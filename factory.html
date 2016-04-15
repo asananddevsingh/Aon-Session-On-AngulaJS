@@ -9,7 +9,8 @@
 
 <body>
     <div ng-app="factoryApp">
-        <div ng-controller="factoryController"></div>
+        <div ng-controller="factoryController1"></div>
+        <div ng-controller="factoryController2"></div>
     </div>
 </body>
 
@@ -21,31 +22,43 @@
    * The Factory recipe constructs a new service using a function with zero or more arguments (these are dependencies on other services). The return value of this function is the service instance created by this recipe.
 
     * Factory takes provider function as second argument and returns an object.
+    * Short hand for configuring service if only $get method is required.
+    * Ability to use other service.
+    * It can return any type of value.
+    * Factory can be used to create parameterised constructor function instance.
 -->
 <script>
     var factoryApp = angular.module("factoryApp", []);
 
-    factoryApp.factory("empNameFactory", function (){
-        return "Anand Dev";
+    factoryApp.service("nameService", function (){
+        this.name = "Anand Dev";
     })
 
+    // Parameterised Constructor function.
     function GreatingProvider(empName)
     {
+        // Returning emp object.
         var employee = {
             name: empName || "No name",
-            greetMsg : function () {
-                return "Welcome, " + this.name;
+            greetMsg : function (name) {
+                return "Welcome, " + ( name || empName );
             }
         }
         return employee;
     }
 
-    factoryApp.factory("greetFactory", function (empNameFactory) {
-        return new GreatingProvider(empNameFactory);
+    // // Using other service "nameService" as dependency.
+    factoryApp.factory("greetFactory", function (nameService) {
+        console.log("Factory is invoked :", new Date());
+        return new GreatingProvider(nameService.name);
     })
 
-    factoryApp.controller("factoryController", function (greetFactory) {
+    factoryApp.controller("factoryController1", function (greetFactory) {
         console.log(greetFactory.greetMsg());
+    })
+
+    factoryApp.controller("factoryController2", function (greetFactory) {
+        console.log(greetFactory.greetMsg("Sahil Singh"));
     })
 
 </script>
