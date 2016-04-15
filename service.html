@@ -30,7 +30,7 @@
 <script>
     var serviceApp = angular.module("serviceApp", []);
 
-    function ConstructorFunction() {
+    function ConstructorFunction() { // We can't pass parameters to the constructor in the service.
         this.serviceConstant = "Hello from service ";
         this.serviceValueFn = function () {
                 return "Service constructor function is invoked.";
@@ -39,10 +39,6 @@
     }
 
     serviceApp.service("myservice", ConstructorFunction);
-
-    /*serviceApp.factory("myservice", function () {
-        return new ConstructorFunction();
-    } );*/
 
     serviceApp.controller("serviceController", function (myservice) {
         console.log(myservice.serviceConstant);
