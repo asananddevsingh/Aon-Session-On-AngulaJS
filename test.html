@@ -5,50 +5,36 @@
     <meta charset="UTF-8">
     <title>Test</title>
     <script src="libs/angular.min.js"></script>
+    <script src="libs/jquery-2.2.3.min.js"></script>
     <script>
         var myApp = angular.module("myApp", []);
+        myApp.filter("toUpper", function(){
+            return function(input){
+                return input.toUpperCase();
+            }
+        })
+        myApp.controller("myController", function ($scope, toUpperFilter) {
+           // $scope.name = toUpperFilter($scope.name);
+            $scope.role = toUpperFilter("Software Engg.");
 
-        myApp.factory('clientId', function clientIdFactory() {
-          return 'a12345654321x';
         });
-
-        myApp.factory('apiToken', function apiTokenFactory(clientId) {
-
-            var encrypt = function(data1, data2) {
-                return (data1 + ':' + data2).toUpperCase();
-            };
-
-            var apiToken = encrypt(clientId, "secret");
-
-            return apiToken;
-        });
-
-        function UnicornLauncher() {
-
-          this.Name = "Launcher";
-          this.Token = "No message";
-        }
-
-        myApp.factory('unicornLauncherFactory', function() {
-          return new UnicornLauncher("Anand Dev");
-        });
-
-        myApp.service('unicornLauncherService', UnicornLauncher);
-
-        myApp.controller('DemoController', function DemoController( unicornLauncherFactory, unicornLauncherService) {
-            console.log("Factory: ", unicornLauncherFactory.Token);
-            console.log("Service: ", unicornLauncherService.Token);
-        });
-
     </script>
 </head>
 
 <body>
     <div ng-app="myApp">
-      <div ng-controller="DemoController as demo">
-            Client ID: {{demo.clientId}}
-      </div>
+        <div ng-controller="myController">
+            <div >{{ randomNum }}</div>
+            <br>
+            <input type="button" value="Create New Num">
+            <br>
+            <span>
+                {{ "name" | toUpper }}
+                {{ role }}
+            </span>
+        </div>
     </div>
+
 </body>
 
 </html>
@@ -57,33 +43,33 @@
 <script>
     /*var myApp = angular.module('myApp', []);
 
-    myApp.provider("nameProvider", function(){
-        this.valueFromProvider = "Provider value";
-        this.$get =  function(){
-            return "returning value";
-        };
-        this.$get = function(){
-            return "returning value";
-        }
+                myApp.provider("nameProvider", function(){
+                    this.valueFromProvider = "Provider value";
+                    this.$get =  function(){
+                        return "returning value";
+                    };
+                    this.$get = function(){
+                        return "returning value";
+                    }
 
-    })
+                })
 
-    myApp.config(function(nameProvider){
-        console.log("Config is invoked");
-        console.log()
-    })
+                myApp.config(function(nameProvider){
+                    console.log("Config is invoked");
+                    console.log()
+                })
 
-    myApp.factory("nameFactory", function () {
-        return 'returning value';
-    })
+                myApp.factory("nameFactory", function () {
+                    return 'returning value';
+                })
 
-    myApp.service('nameService', function () {
-        return "returning value";
-    });
+                myApp.service('nameService', function () {
+                    return "returning value";
+                });
 
-    myApp.controller('DemoController', function DemoController(nameProvider, nameFactory, nameService) {
-        console.log("Provider : ", nameProvider, nameProvider.valueFromProvider);
-        console.log("Factory : ", nameFactory);
-        console.log("Service : ", nameService);
-    });*/
+                myApp.controller('DemoController', function DemoController(nameProvider, nameFactory, nameService) {
+                    console.log("Provider : ", nameProvider, nameProvider.valueFromProvider);
+                    console.log("Factory : ", nameFactory);
+                    console.log("Service : ", nameService);
+                });*/
 </script>

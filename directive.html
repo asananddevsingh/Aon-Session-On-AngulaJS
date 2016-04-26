@@ -8,24 +8,26 @@
     <script>
         var myApp = angular.module("myApp", []);
         myApp.controller("myController", function ($scope) {
+            $scope.name = "Angular JS";
 
-            $scope.name = "Anand Dev";
+        });
 
-            $scope.click = "Click me";
-
-            $scope.Welcome = function (studentName) {
-                console.log("welcome, ", studentName, " to angular session !");
-            };
+        myApp.directive("myDir", function(){
+            return{
+                restrict: 'M',
+                replace: true,
+                template:'<h1> This is comment directive, {{ name }} </h1>'
+            }
         })
+
     </script>
 </head>
 
 <body>
     <div ng-app="myApp" id="divMyApp">
         <div ng-controller="myController" id="divCtrl">
-            <div ng-model="name" ng-bind="name" ng-init="name = 'Sahil Singh'" ng-show="true"></div>
-            <input type="text" id="txtName" ng-model="student">
-            <a ng-href="#" ng-click="Welcome(student)" id="aGreet">{{click}}</a>
+           <input type="text" ng-model="name">
+            <!-- directive: my-dir -->
         </div>
     </div>
 </body>
