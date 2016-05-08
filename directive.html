@@ -12,14 +12,39 @@
         myApp.controller('myController', function ($scope) {
             $scope.name = 'Custom directive';
             $scope.address = 'Sec - 44, Noida - India.';
+
+            $scope.anand = 'Anand Dev';
+            $scope.aijaz = 'Aijaz';
+
+            /*$scope.anand = {
+                name: 'Anand',
+                address: '1600 Amphitheatre'
+            };
+            $scope.aijaz = {
+                name: 'Aijaz',
+                address: '123 Somewhere'
+            };
+*/
+            $scope.GetGreetFromController = function (name) {
+                name = name || 'Stranger',
+                    alert('Welcome, ' + name + ' from controller.');
+            };
         });
 
         myApp.directive('custDir', function () {
             return {
                 restrict: 'AE',
                 //template: '<p>Hello: <b> {{ name }}</b> , your address is: <b> {{ address}} </b></p>',
-                templateUrl: function (ele, attr){ // Here we can not have access of scope object.
+                templateUrl: function (ele, attr) { // Here we can not have access of scope object.
                     return '' + attr.templateFor + '-template.html';
+                },
+
+                scope: {
+                    // custName is name of scope which we can use in templates and link function.
+                    //And custMyName is the normalized form of attribute at custom directive.
+                    localFood: '@favFood',
+                    getGreet: '&getGreet',
+                    custName: '=custMyName'
                 }
             };
         });
@@ -29,10 +54,12 @@
 <body>
     <div ng-app="myApp" id="divMyApp">
         <div ng-controller="myController" id="divCtrl">
-            Enter Name:
-            <input type="text" ng-model='name'>
-            <div cust-dir class="custom" template-for='custom'></div>
-            <cust-dir class="custom" template-for='custom'></cust-dir>
+            Enter Message for Anand:
+            <input type="text" ng-model='anand'> Enter Message for Aijaz:
+            <input type="text" ng-model='aijaz'>
+            <br>
+            <div cust-dir class="custom" cust-my-name='anand' template-for='custom' fav-food='Tahri' get-greet='GetGreetFromController(anand)'></div>
+            <cust-dir class="custom" cust-my-name='aijaz' template-for='custom' fav-food='Biriyani' get-greet='GetGreetFromController(aijaz)'></cust-dir>
         </div>
     </div>
 </body>

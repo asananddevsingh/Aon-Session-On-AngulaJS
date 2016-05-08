@@ -1,1 +1,8 @@
-<p>Hello: <b> {{ name }}</b> , your address is: <b> {{ address}} </b></p>
+<p>Hello: <b> {{ custName }}</b>
+
+<br>
+<ul>
+    <li>String binding by using @ symbol: <p> Favorite food of, {{ custName }} is {{ localFood }}</p> </li>
+    <li>Parent execution binding using & symbol: <p> <input type="button" ng-click='getGreet()' value="Get Greet"></p></li>
+    <li>Bi diirectional binding using = symbol: Type message for controller <input type="text" ng-model='custName' > </li>
+</ul>
