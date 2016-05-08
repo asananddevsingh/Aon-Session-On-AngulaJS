@@ -29,6 +29,7 @@
                 name = name || 'Stranger',
                     alert('Welcome, ' + name + ' from controller.');
             };
+
         });
 
         myApp.directive('custDir', function () {
@@ -48,6 +49,48 @@
                 }
             };
         });
+
+        /* myApp.controller('myController2', function ($scope) {
+             $scope.sayBye = 'Take care.';
+         });*/
+
+        myApp.directive('linkDir', function ($interval) {
+            return {
+                restrict: 'AE',
+                replace: true,
+                template: '<p>Hey, {{message}}, <b> {{ sayBye }} </b></p>',
+                controller: function ($scope) {
+                    $scope.sayBye = 'Take care.';
+                },
+                link: function (scope, element, attrs) {
+
+                    var format,
+                        timeoutId;
+
+                    function updateTime() {
+                        scope.message = 'Welcome from link function @: ' + new Date();
+                    }
+
+                    scope.$watch(attrs.myCurrentTime, function (value) {
+                        format = value;
+                        updateTime();
+                    });
+
+                    element.on('$destroy', function () {
+                        $interval.cancel(timeoutId);
+                    });
+
+                    // start the UI update process; save the timeoutId for canceling
+                    timeoutId = $interval(function () {
+                        updateTime(); // update DOM
+                    }, 1000);
+
+                    element.on('click', function () {
+                        alert('Hey ! You have clicked me.')
+                    })
+                }
+            }
+        });
     </script>
 </head>
 
@@ -57,10 +100,12 @@
             Enter Message for Anand:
             <input type="text" ng-model='anand'> Enter Message for Aijaz:
             <input type="text" ng-model='aijaz'>
-            <br>
-            <div cust-dir class="custom" cust-my-name='anand' template-for='custom' fav-food='Tahri' get-greet='GetGreetFromController(anand)'></div>
+            <div cust-dir class="custom" cust-my-name='anand' template-for='custom' fav-food='Tahri' get-greet='GetGreetFromController(anand)' my-current-time="format"></div>
             <cust-dir class="custom" cust-my-name='aijaz' template-for='custom' fav-food='Biriyani' get-greet='GetGreetFromController(aijaz)'></cust-dir>
         </div>
+        <hr>
+        <div link-dir></div>
+        <link-dir></link-dir>
     </div>
 </body>
 
