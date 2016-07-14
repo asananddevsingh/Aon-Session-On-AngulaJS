@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Injector</title>
+    <script src="/libs/angular.min.js"></script>
+    <script>
+        var myApp = angular.module('myApp', []);
+        myApp.service('s1', function () {
+            this.value = 22;
+        });
+
+        function MyCtrl($scope, $injector) {
+            $scope.doSomething = function () {
+                var s1 = $injector.get('s1')
+                s1.value += 10
+            }
+            $scope.value = function () {
+                var s1 = $injector.get('s1')
+                return s1.value
+            }
+        }
+    </script>
+</head>
+
+<body ng-app="myApp">
+    <div id="div1" ng-controller="MyCtrl">
+        <button ng-click="doSomething()">increment</button>
+        {{value()}}
+    </div>
+
+</body>
+
+</html>

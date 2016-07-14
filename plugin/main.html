@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+
+    <script src="/libs/angular.min.js"></script>
+    <script src="/plugin/js/plugin.js"></script>
+</head>
+
+<body ng-app="main">
+    <div ng-controller="mainCtrl">
+        <h1>{{message}}</h1>
+        <p>This is main page which is having its own module</p>
+        <br>
+        <h4 plugin-notification></h4>
+    </div>
+    <script>
+        angular.module("main", ["plugin"])
+            .controller("mainCtrl", ["$scope", function ($scope) {
+                $scope.message = "Welcome to main page";
+        }])
+    </script>
+</body>
+
+</html>
