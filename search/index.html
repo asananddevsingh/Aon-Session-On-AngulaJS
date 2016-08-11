@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Search & Filter</title>
+    <script src="/libs/angular.min.js"></script>
+    <script src="/search/jsonData.js"></script>
+    <script src="/search/script.js"></script>
+</head>
+
+<body ng-app="searchApp">
+    <div ng-controller="searchCtrl">
+        <div class="search">
+            <span>Search Results <input type="text" id="txtSearchText" ng-model="search.claim"></span>
+        </div>
+        <div ng-repeat="claims in claimsData | filter: claims.cInfo.claimNo = search.claim" class="main" ng-class-odd="'odd'" ng-class-even="'even'">
+            <span ng-repeat="cInfo in claims.claimsInfo ">
+                <div><span class="lable">Claim No.</span> <span class="value"><a href="javascript:void(0)" target="_blank">{{cInfo.claimNo}}</a></span></div>
+        <div><span class="lable">Adjuster Name</span> <span class="value">{{cInfo.adjusterName}}</span></div>
+        <div><span class="lable">Insured Name</span> <span class="value">{{cInfo.insuredName}}</span></div>
+        <div><span class="lable">Property</span> <span class="value">{{cInfo.property}}</span></div>
+        <div><span class="lable">License Plate</span> <span class="value">{{cInfo.licensePlate}}</span></div>
+        </span>
+        <span ng-repeat="rInfo in claims.repairInfo">
+                <div><span class="lable">Repair Amount</span><span class="value">{{rInfo.repairAmount}}</span></div>
+    <div><span class="lable">Repair Status</span><span class="value">{{rInfo.repairStatus}}</span></div>
+    <div><span class="lable">Loss Type</span><span class="value">{{rInfo.lossType}}</span> </div>
+    </span>
+    <span ng-repeat="cDetails in claims.claimDetails">
+            <div><span class="lable">Claim Created</span><span class="value">{{cDetails.claimCreated}}</span></div>
+    <div><span class="lable">Loss Date</span><span class="value">{{cDetails.lossDate}}</span></div>
+    <div><span class="lable">Journal</span> <span class="value">
+        <a href="{{cDetails.journal}}" target="_blank">View</a>
+    </span></div>
+    <div> </div>
+    </span>
+    </div>
+    </div>
+
+</body>
+
+</html>
+
+
+<style>
+    body {
+        font-family: sans-serif, monospace;
+    }
+
+    div.search {
+        background: #e6e6e6;
+        padding: 10px;
+        border: 1px solid #c9c9c9;
+        font-size: 12px;
+        font-weight: bold;
+        color: gray;
+    }
+
+    div.search input {
+        line-height: 22px;
+        font-size: 14px;
+        color: #808080;
+    }
+
+    div.main {
+        height: auto;
+        width: 100%;
+        border-bottom: 1px solid #c9c9c9;
+        padding: 5px 0px;
+    }
+
+    div.even {
+        background-color: #fff;
+    }
+
+    div.odd {
+        background-color: #fff;
+    }
+
+    div > span {
+        width: 33%;
+        display: inline-block;
+        vertical-align: top;
+        line-height: 24px;
+    }
+
+    div > span.lable {
+        text-align: right;
+        margin-right: 5px;
+        color: #808080;
+        font-size: 13px;
+    }
+
+    div > span.value {
+        text-align: left;
+        margin-left: 5px;
+        font-size: 12px;
+        font-weight: bold;
+        color: gray;
+    }
+
+    div > span.value a {
+        color: rgba(70, 178, 255, 0.78);
+        text-decoration: none;
+    }
+</style>
