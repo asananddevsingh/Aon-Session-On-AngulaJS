@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Multi Select</title>
+    <script src="../libs/angular.min.js"></script>
+    <style>
+        button {
+            width: 40px;
+        }
+        
+        table {
+            border-collapse: collapse;
+        }
+        
+        td {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main" ng-app="myApp">
+        <div ng-controller="myCtrl">
+
+            <table>
+                <tr>
+                    <th>
+                        <h2>Available List</h2></th>
+                    <th>&nbsp;</th>
+                    <th>
+                        <h2>Selected List</h2></th>
+                </tr>
+                <tr>
+                    <td rowspan="4">
+                        <select multiple id="availabelist" size="10" style="width:275px" ng-model="option.available" ng-options="n as n.name for n in availableNames">
+                        </select>
+                    </td>
+                    <td>
+                        <button ng-click="moveSelectedOptions()">&gt;</button>
+                    </td>
+                    <td rowspan="4">
+                        <select multiple id="availabelist" size="10" style="width:275px" ng-model="option.selected" ng-options="s as s.name for s in selectedNames">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button ng-click="moveAllOptions()">&gt;&gt;</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button ng-click="removeSelectedOptions()">&lt; </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button ng-click="removeAllOptions()">&lt;&lt; </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        "use strict";
+        var myApp = angular.module("myApp", []);
+        myApp.controller("myCtrl", ["$scope", function ($scope) {
+
+            $scope.availableNames = [
+                {
+                    id: 101,
+                    name: "AngularJS"
+                },
+                {
+                    id: 102,
+                    name: "JavaScript"
+                },
+                {
+                    id: 103,
+                    name: "JQuery"
+                },
+                {
+                    id: 104,
+                    name: "HTML"
+                },
+                {
+                    id: 105,
+                    name: "CSS"
+                }
+            ];
+            $scope.selectedNames = [
+                {
+                    id: 106,
+                    name: "React JS"
+                }
+            ];
+
+            $scope.moveSelectedOptions = function () {
+                if ($scope.option) {
+                    angular.forEach($scope.option.available, function (item, index) {
+                        $scope.selectedNames.push(item);
+                        var removingItemIndex = $scope.availableNames.indexOf(item);
+                        $scope.availableNames.splice(removingItemIndex, 1);
+                    });
+                };
+            };
+
+            $scope.moveAllOptions = function () {
+                if ($scope.availableNames) {
+                    angular.forEach($scope.availableNames, function (item, index) {
+                        $scope.selectedNames.push(item);
+                    });
+                    $scope.availableNames = [];
+                };
+            };
+
+            $scope.removeSelectedOptions = function () {
+                if ($scope.option) {
+                    angular.forEach($scope.option.selected, function (item, index) {
+                        $scope.availableNames.push(item);
+                        var removingItemIndex = $scope.selectedNames.indexOf(item);
+                        $scope.selectedNames.splice(removingItemIndex, 1);
+                    });
+                };
+            };
+
+            $scope.removeAllOptions = function () {
+                if ($scope.selectedNames) {
+                    angular.forEach($scope.selectedNames, function (item, index) {
+                        $scope.availableNames.push(item);
+                    });
+                    $scope.selectedNames = [];
+                };
+            };
+
+        }])
+    </script>
+</body>
+
+</html>
