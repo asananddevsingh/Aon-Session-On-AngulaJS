@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>On | Emit | Broadcast</title>
+
+    <script src="../libs/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-app="app">
+        <div ng-controller="GrandParentController" style="margin:10px;padding:20px;border:5px double red;">
+            <h1>Grand Parent Controller</h1>
+            <label for="msg"><b>Count in Grand Parent: {{countGrand}}</b></label>
+            <div ng-controller="ParentController" style="margin:10px;padding:20px;border:5px solid blue;">
+                <h1>Parent Controller 1</h1>
+
+                <button ng-click="emitParent()"> Emit Parent</button>
+                <button ng-click="broadcastParent()"> Broadcast Parent</button>
+                <label for="msg"><b>Count in Parent: {{countParent}}</b></label>
+
+                <div ng-controller="ChildController1" style="margin:10px;padding:20px;border:5px dashed magenta;">
+                    <h1>Child Controller 1</h1>
+                    <button ng-click="emitChild1()">Emit Child 1</button>
+                    <button ng-click="broadcastChild1()">Broadcast Child 1</button>
+                    <label for="msg"><b>Count in Child 1: {{countChild1}}</b></label>
+                </div>
+                <div ng-controller="ChildController2" style="margin:10px;padding:20px;border:5px dotted green;">
+                    <h1>Child Controller 2</h1>
+                    <button ng-click="emitChild2()">Emit Child 2</button>
+                    <button ng-click="broadcastChild2()">Broadcast Child 2</button>
+                    <label for="msg"><b>Count in Child 2: {{countChild2}}</b></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        (function (angular) {
+            'use strict';
+
+            var app = angular.module('app', []);
+
+            app.controller('GrandParentController', function ($scope, $rootScope) {
+                $scope.countGrand = 0;
+                $scope.$on('count', function () {
+                    $scope.countGrand++;
+                });
+            });
+
+            app.controller('ParentController', function ($scope) {
+                $scope.countParent = 0;
+                $scope.$on('count', function () {
+                    $scope.countParent++;
+                });
+
+                $scope.emitParent = function () {
+                    $scope.$emit('count');
+                };
+
+                $scope.broadcastParent = function () {
+                    $scope.$broadcast('count');
+                }
+            });
+
+            app.controller('ChildController1', function ($scope) {
+                $scope.countChild1 = 0;
+                $scope.$on('count', function () {
+                    $scope.countChild1++;
+                });
+
+                $scope.emitChild1 = function () {
+                    $scope.$emit('count');
+                };
+
+                $scope.broadcastChild1 = function () {
+                    $scope.$broadcast('count');
+                };
+            });
+
+            app.controller('ChildController2', function ($scope) {
+                $scope.countChild2 = 0;
+                $scope.$on('count', function () {
+                    $scope.countChild2++;
+                });
+
+                $scope.emitChild2 = function () {
+                    $scope.$emit('count');
+                };
+
+                $scope.broadcastChild2 = function () {
+                    $scope.$broadcast('count');
+                };
+            });
+
+        })(window.angular);
+    </script>
+</body>
+
+
+</html>
