@@ -5,7 +5,13 @@
     <meta charset="UTF-8">
     <title>Values</title>
     <script src="libs/angular.min.js"></script>
+    <!--
+        Value
 
+        * A value is nothing more than a simple injectable value. 
+        * The value can be a string, number but also a function. 
+        * Value differs from constant in that value can not be injected into configurations, but it can be intercepted by decorators.
+    -->
     <script>
         var myApp = angular.module("myApp", []);
         myApp.value("welcomeMsg", "Welcome, ");
