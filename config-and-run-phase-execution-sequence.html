@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Providers</title>
+    <script src="libs/angular.min.js"></script>
+</head>
+
+<body>
+    
+    <div id="main" ng-app="myApp" ng-controller="myCtrl">{{sum}} - {{1 + 3}}</div>
+
+    <script type="text/javascript">
+        
+        var myApp = angular.module('myApp', ['firstDI', 'secondDI']);
+        
+        myApp.config(function(){
+            console.log('CONFIG phase of MY APP dependency.');
+        })
+        
+        myApp.run(function(){
+            console.log('RUN phase of MY APP dependency.');
+        })
+        
+        myApp.controller('myCtrl', function($scope){
+            $scope.sum = 'SUM'
+        })
+        
+        var firstDI = angular.module('firstDI', []);
+        firstDI.config(function(){
+            console.log('CONFIG phase of FIRST dependency.');
+        })
+        
+        firstDI.run(function(){
+            console.log('RUN phase of FIRST dependency.');
+        })
+        
+        var secondDI = angular.module('secondDI', []);
+        secondDI.config(function(){
+            console.log('CONFIG phase of SECOND dependency.');
+        })
+        
+        secondDI.run(function(){
+            console.log('RUN phase of SECOND dependency.');
+        })
+                        
+    </script>
+
+    /* OUT PUT 
+    CONFIG phase of FIRST dependency.
+    CONFIG phase of SECOND dependency.
+    CONFIG phase of MY APP dependency.
+    RUN phase of FIRST dependency.
+    RUN phase of SECOND dependency.
+    RUN phase of MY APP dependency.
+    */
+
+</body>
+
+</html>
