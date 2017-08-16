@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="libs/angular.min.js"></script>
+
+</head>
+
+<body>
+    <div id="main" ng-app="myApp" ng-controller="myCtrl">If '4', angular is running, => {{1 + 3}}</div>
+
+    <!--
+        Constant 
+    
+        A constant is a specific data that can be injected everywhere. A constant can not be intercepted by a decorator, 
+        that means that the value of a constant can never be changed.
+        
+        * We can access constant values in both "config" and "run" phases.
+        * Constant can never be changed.
+        
+    -->
+
+    <script type="text/javascript">
+        var myApp = angular.module('myApp', []);
+
+        /* Setting constant data using $provide in config phase */
+        myApp.config(function($provide) {
+            $provide.constant('const1', 'Setting constant data using $provide in config phase.');
+        })
+
+        /* Setting constant data directly using constant function of angular. */
+        myApp.constant('const2', "Setting constant data directly using constant function of angular.");
+
+        myApp.controller('myCtrl', function(const1, const2) {
+            console.log(const1);
+            console.log(const2);
+        })
+
+    </script>
+</body>
+
+</html>
