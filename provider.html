@@ -19,8 +19,11 @@
 
 <!--
  What is provider:
- A provider is an object with a $get() method. The injector calls the $get method to create a new instance of a service. The Provider can have additional methods which would allow for configuration of the provider. AngularJS uses $provide to register new providers
+ A provider is an object with a $get() method. The injector calls the $get method to create a new instance of a service. 
+ The Provider can have additional methods which would allow for configuration of the provider. 
+ AngularJS uses $provide to register new providers.
 
+* $get() is a factory method.
 * Provider, factory and service all are providers, but they behave differenlty and used differently.
 * It gets called only once, no matter how many times you have injected it.
 * We can use providers at the config phase of the application.
